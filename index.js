@@ -7,9 +7,11 @@ module.exports = function stateMachinePlugin(schema, options) {
   if (options.save == undefined) {
     options.save = true;
   }
+
   if (options.default == undefined) {
     options.default = 'pending';
   }
+  
   if (options.field == undefined) {
     options.field = 'state';
   }
@@ -77,11 +79,9 @@ module.exports = function stateMachinePlugin(schema, options) {
   schema.methods.applyStep = function(...args) {
     var model = this;
 
-    //console.log('transitioning',model);
     var name;
 
     var opts = args.shift();
-    //console.log(opts, args);
 
     if (typeof opts == 'string') {
       name = opts; 
