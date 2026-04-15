@@ -39,6 +39,9 @@ schema.plugin(require(path.join(__dirname, '..')), {
   machine: {
     pending: {
       transitions: {
+        active: {
+          target: 'active'
+        }
       }
     }
   }

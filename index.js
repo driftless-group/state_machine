@@ -50,6 +50,12 @@ module.exports = function stateMachinePlugin(schema, options={}) {
     }
     
     var transition = options.machine[this.state].transitions[name];
+
+    // If you set this to true the state machine won't 
+    // let you move to whatever state you want.  You have 
+    // specify it in the configuration object as a transition 
+    // for that state.
+    
     if (options.strict == false && options.states.indexOf(name) > -1) {
       transition = {target: name};
     }
