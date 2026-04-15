@@ -1,5 +1,5 @@
 function truth() { return true; };
-function falsity() { return new Promise((resolve) => { resolve(); })};
+function nothing() { return new Promise((resolve) => { resolve(); })};
 
 module.exports = function stateMachinePlugin(schema, options={}) {
   if (options.strict == undefined) {
@@ -147,7 +147,7 @@ module.exports = function stateMachinePlugin(schema, options={}) {
           'after'
         ].reduce((transition, functionName) => {
           if (transition[functionName] == undefined) {
-            transition[functionName] = falsity; 
+            transition[functionName] = nothing; 
           }
 
           return transition;
