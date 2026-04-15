@@ -40,7 +40,7 @@
       machine: {
         pending: {
           transitions: {
-            submit: {
+            active: {
               target: 'active'
             }
           }
