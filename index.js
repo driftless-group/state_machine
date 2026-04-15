@@ -30,6 +30,7 @@ module.exports = function stateMachinePlugin(schema, options={}) {
 
   if (options.verbose) {
     console.log('state_machine:options',options);
+    console.log('state_machine:schema', field);
   }
 
   var fieldObject = {};
@@ -49,7 +50,9 @@ module.exports = function stateMachinePlugin(schema, options={}) {
     // specify it in the configuration object as a transition 
     // for that state.
     
-    if (options.strict == false && options.states.indexOf(name) > -1) {
+    if (options.strict == false && 
+       (options.states == undefined || options.states.indexOf(name) > -1)) {
+
       transition = {target: name};
     }
 
@@ -67,13 +70,13 @@ module.exports = function stateMachinePlugin(schema, options={}) {
 
   schema.methods.transition = function(...args) {
     var self = this;
-    var setOfTransitions = args[0];
+    var set = args[0];
     
     if (options.verbose) {
       console.log('transition:set',set);
     }
 
-    if (Array.isArray(setOfTransitions)) {
+    if (Array.isArray(set)) {
       set = args.shift();
 
       return new Promise(async(resolve, reject) => {

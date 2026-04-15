@@ -8,10 +8,10 @@ var {
 process.env.NODE_ENV = 'test';
 
 require('dotenv').config({path: path.join(__dirname, '.env')});
-var { 
-  Order 
-} = require(path.join(__dirname, 'order'));
+var { Order } = require(path.join(__dirname, 'order'));
+var { Shop } = require(path.join(__dirname, 'shop'));
 require('@drifted/db');
+
 
 describe('state_machine', () => {
 
@@ -25,7 +25,7 @@ describe('state_machine', () => {
     done();
   })
 
-  it('create a new order and have it have a state and transition', function(done) {
+  it('strict: create a new order and have it have a state and transition', function(done) {
     var order = new Order({})
     
     order.save().then(() => {
@@ -38,7 +38,7 @@ describe('state_machine', () => {
     }).catch(doneMessage(done));
   })
 
-  it('cant tranisition to an invalid state', function(done) {
+  it('strict: cant tranisition to an invalid state', function(done) {
     var order = new Order({})
     
     order.save().then(() => {
@@ -55,6 +55,35 @@ describe('state_machine', () => {
         assert.equal(error.cause.synopsis.to, 'complete');
         assert.equal(error.cause.synopsis.existing, false);
         
+        done();
+      });
+
+    }).catch(doneMessage(done));
+  })
+
+   it('unstrict: can tranisition to whatever state', function(done) {
+    var shop = new Shop({})
+    
+    shop.save().then(() => {
+      assert.equal(shop.state, 'pending');
+      
+      shop.transition('condemned').then(() => {
+        assert.equal(shop.state, 'condemned');
+        done();
+      });
+
+    }).catch(doneMessage(done));
+  })
+
+
+  it('unstrict: can tranisition to whatever state', function(done) {
+    var shop = new Shop({})
+    
+    shop.save().then(() => {
+      assert.equal(shop.state, 'pending');
+      
+      shop.transition('condemned').then(() => {
+        assert.equal(shop.state, 'condemned');
         done();
       });
 
