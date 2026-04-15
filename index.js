@@ -18,18 +18,13 @@ module.exports = function stateMachinePlugin(schema, options={}) {
     options.field = 'state';
   }
 
-  if (options.states == undefined) {
-    options.states = ['pending', 'complete', 'active', 'cancelled'];
-  }
-
   var field = {
     type: String,
-    enum: options.states,
     required: true,
     default: options.default
   }
 
-  if (options.states == undefined) {
+  if (options.states != undefined) {
     field.enum = options.states;
   }
 
