@@ -28,7 +28,7 @@ schema.methods.add = function(item) {
 }
 
 schema.plugin(require(path.join(__dirname, '..')), {
-  verbose: true,
+  verbose: false,
   states: [
     'pending', 
     'active', 
