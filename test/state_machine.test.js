@@ -61,14 +61,14 @@ describe('state_machine', () => {
     }).catch(doneMessage(done));
   })
 
-   it('unstrict: can tranisition to whatever state', function(done) {
+   it('unstrict: can tranisition to whatever state: existing', function(done) {
     var shop = new Shop({})
     
     shop.save().then(() => {
       assert.equal(shop.state, 'pending');
       
-      shop.transition('condemned').then(() => {
-        assert.equal(shop.state, 'condemned');
+      shop.transition('active').then(() => {
+        assert.equal(shop.state, 'active');
         done();
       });
 
@@ -76,7 +76,7 @@ describe('state_machine', () => {
   })
 
 
-  it('unstrict: can tranisition to whatever state', function(done) {
+  it('unstrict: can tranisition to whatever state: not existing', function(done) {
     var shop = new Shop({})
     
     shop.save().then(() => {
