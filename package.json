@@ -21,6 +21,7 @@
     "test": "mocha -w"
   },
   "devDependencies": {
+    "@drifted/qa": "^0.0.10",
     "mocha": "^11.7.1",
     "mongoose": "^8.18.0"
   }
