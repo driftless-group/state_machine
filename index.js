@@ -169,6 +169,7 @@ module.exports = function stateMachinePlugin(schema, options={}) {
                 if (options.verbose) {
                   console.log('transition:saving', model);
                 }
+
                 if (opts.save) {
                   model.save().then(() => {
                     change.after.apply(model).then(() => {

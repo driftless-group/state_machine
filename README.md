@@ -1,13 +1,10 @@
 # state_machine
 
 ```bash
-  
   npm install @drifted/state_machine --save
-
 ```
 
 ```javascript
-   
     var path = require('path');
     const mongoose = require('mongoose');
 
