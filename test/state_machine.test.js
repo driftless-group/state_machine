@@ -9,7 +9,7 @@ process.env.NODE_ENV = 'test';
 
 require('dotenv').config({path: path.join(__dirname, '.env')});
 var { Order } = require(path.join(__dirname, 'order'));
-require('@drifted/qa/db');
+require('@drifted/db');
 
 describe('state_machine', () => {
 

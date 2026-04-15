@@ -1,8 +1,6 @@
 function truth() { return true; };
 function falsity() { return new Promise((resolve) => { resolve(); })};
 
-// i should add a way to log activities.
-
 module.exports = function stateMachinePlugin(schema, options={}) {
   if (options.strict == undefined) {
     options.strict = true;
@@ -51,7 +49,7 @@ module.exports = function stateMachinePlugin(schema, options={}) {
     
     var transition = options.machine[this.state].transitions[name];
 
-    // If you set this to true the state machine won't 
+    // If you set strict to true the state machine won't 
     // let you move to whatever state you want.  You have 
     // specify it in the configuration object as a transition 
     // for that state.
@@ -77,21 +75,19 @@ module.exports = function stateMachinePlugin(schema, options={}) {
     var setOfTransitions = args[0];
     
     if (options.verbose) {
-      console.log('transition:set',setOfTransitions);
+      console.log('transition:set',set);
     }
 
     if (Array.isArray(setOfTransitions)) {
-      setOfTransitions = args.shift();
+      set = args.shift();
 
       return new Promise(async(resolve, reject) => {
-        //console.log('args', args);
-
         var results = [];
 
-        while(setOfTransitions.length > 0) {
-          var transition = setOfTransitions.shift();
+        while(set.length > 0) {
+          var transition = set.shift();
           if (options.verbose) {
-            console.log('->', transition, args);
+            console.log('transition:applyStep', transition, args);
           }
 
           var result =  await self.applyStep(transition, ...args)
@@ -103,18 +99,17 @@ module.exports = function stateMachinePlugin(schema, options={}) {
           if (result != undefined) {
             results.push(result);
           }
-
-
         }
+
         if (options.verbose) {
           console.log('results',results);
         }
+        
         resolve(results);
-
       })
     } else {
       if (options.verbose) {
-        console.log('transition:not_array', args);
+        console.log('transition:applyStep', args);
       }
       return this.applyStep(...args);
     }
@@ -168,8 +163,8 @@ module.exports = function stateMachinePlugin(schema, options={}) {
 
           change.before.apply(model).then(() => {
             change.guard.apply(model).then(() => {
-              console.log(change);
               model.state = change.target;
+              
               change.action.apply(model, args).then((result) => {
                 if (options.verbose) {
                   console.log('transition:saving', model);
@@ -222,7 +217,5 @@ module.exports = function stateMachinePlugin(schema, options={}) {
   } 
 
 };
-
-
 
 
