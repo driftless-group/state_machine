@@ -12,6 +12,7 @@ var { Order } = require(path.join(__dirname, 'order'));
 require('@drifted/qa/db');
 
 describe('state_machine', () => {
+
   before((done) => {
     Order.deleteMany({}).then(() => {
       done();
@@ -27,8 +28,8 @@ describe('state_machine', () => {
     
     order.save().then(() => {
       assert.equal(order.state, 'pending');
-
       order.transition('active').then(() => {
+        assert.equal(order.state, 'active');
         done();
       }).catch(doneMessage(done));
 
@@ -57,6 +58,7 @@ describe('state_machine', () => {
 
     }).catch(doneMessage(done));
   })
+
 })
 
 

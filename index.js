@@ -4,6 +4,10 @@ function falsity() { return new Promise((resolve) => { resolve(); })};
 // i should add a way to log activities.
 
 module.exports = function stateMachinePlugin(schema, options={}) {
+  if (options.strict == undefined) {
+    options.strict = true;
+  }
+
   if (options.save == undefined) {
     options.save = true;
   }
@@ -32,7 +36,7 @@ module.exports = function stateMachinePlugin(schema, options={}) {
   }
 
   if (options.verbose) {
-    console.log('options',options);
+    console.log('state_machine:options',options);
   }
 
   var fieldObject = {};
@@ -44,7 +48,17 @@ module.exports = function stateMachinePlugin(schema, options={}) {
     if (options.verbose) {
       console.log('transitions:select', this.state, '~>', name);
     }
-    return options.machine[this.state].transitions[name];
+    
+    var transition = options.machine[this.state].transitions[name];
+    if (options.strict == false && options.states.indexOf(name) > -1) {
+      transition = {target: name};
+    }
+
+    if (options.verbose) {
+      console.log('transition:triage', transition);
+    }
+    
+    return transition;
   }
 
   schema.methods.invoke = function(name, ...args) {
@@ -148,6 +162,7 @@ module.exports = function stateMachinePlugin(schema, options={}) {
 
           change.before.apply(model).then(() => {
             change.guard.apply(model).then(() => {
+              console.log(change);
               model.state = change.target;
               change.action.apply(model, args).then((result) => {
                 if (options.verbose) {

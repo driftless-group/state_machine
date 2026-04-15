@@ -28,6 +28,7 @@ schema.methods.add = function(item) {
 }
 
 schema.plugin(require(path.join(__dirname, '..')), {
+  verbose: true,
   states: [
     'pending', 
     'active', 
@@ -38,9 +39,6 @@ schema.plugin(require(path.join(__dirname, '..')), {
   machine: {
     pending: {
       transitions: {
-        active: {
-          target: 'active'
-        }
       }
     }
   }
