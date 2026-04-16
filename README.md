@@ -39,6 +39,11 @@
           active: {
             target: 'active'
           }
+        },
+        active: {
+          end: {
+            target: 'complete'
+          }
         }
       }
     })
