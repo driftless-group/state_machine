@@ -53,3 +53,16 @@
     module.exports.Order = mongoose.models.Order;
 
 ```
+
+
+```javascript
+   const path = require('path');
+   const { Order } = require(path.join(__dirname, 'order'));
+
+
+   var order = new Order({})
+   order.change('active').then(() => {
+     console.log(order);
+   })
+
+```

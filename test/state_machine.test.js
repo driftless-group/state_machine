@@ -25,12 +25,12 @@ describe('state_machine', () => {
     done();
   })
 
-  it('strict: create a new order and have it have a state and transition', function(done) {
+  it('strict: create a new order and have it have a state and change', function(done) {
     var order = new Order({})
     
     order.save().then(() => {
       assert.equal(order.state, 'pending');
-      order.transition('active').then(() => {
+      order.change('active').then(() => {
         assert.equal(order.state, 'active');
         done();
       }).catch(doneMessage(done));
@@ -43,8 +43,8 @@ describe('state_machine', () => {
     
     order.save().then(() => {
       assert.equal(order.state, 'pending');
-      order.transition('active').then(() => {
-        order.transition('end').then(() => {
+      order.change('active').then(() => {
+        order.change('end').then(() => {
           assert.equal(order.state, 'complete')
           done();
         }).catch(doneMessage(done));
@@ -59,7 +59,7 @@ describe('state_machine', () => {
     
     order.save().then(() => {
       assert.equal(order.state, 'pending');
-      order.transition('complete').then(() => {
+      order.change('complete').then(() => {
         done();
       }).catch(function(error) {
         //console.log('error',error.message);
@@ -84,7 +84,7 @@ describe('state_machine', () => {
     shop.save().then(() => {
       assert.equal(shop.state, 'pending');
       
-      shop.transition('active').then(() => {
+      shop.change('active').then(() => {
         assert.equal(shop.state, 'active');
         done();
       });
@@ -99,7 +99,7 @@ describe('state_machine', () => {
     shop.save().then(() => {
       assert.equal(shop.state, 'pending');
       
-      shop.transition('condemned').then(() => {
+      shop.change('condemned').then(() => {
         assert.equal(shop.state, 'condemned');
         done();
       });

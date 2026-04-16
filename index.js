@@ -69,7 +69,7 @@ module.exports = function stateMachinePlugin(schema, options={}) {
     return action.apply(this, args); 
   }
 
-  schema.methods.transition = function(...args) {
+  schema.methods.change = function(...args) {
     var self = this;
     var set = args[0];
     
