@@ -36,10 +36,8 @@
 
       machine: {
         pending: {
-          transitions: {
-            active: {
-              target: 'active'
-            }
+          active: {
+            target: 'active'
           }
         }
       }

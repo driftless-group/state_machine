@@ -2,6 +2,7 @@ function truth() { return true; };
 function nothing() { return new Promise((resolve) => { resolve(); })};
 
 module.exports = function stateMachinePlugin(schema, options={}) {
+
   if (options.strict == undefined) {
     options.strict = true;
   }
@@ -43,7 +44,7 @@ module.exports = function stateMachinePlugin(schema, options={}) {
       console.log('transitions:select', this.state, '~>', name);
     }
     
-    var transition = options.machine[this.state].transitions[name];
+    var transition = options.machine[this.state][name];
 
     // If you set strict to true the state machine won't 
     // let you move to whatever state you want.  You have 
@@ -194,7 +195,7 @@ module.exports = function stateMachinePlugin(schema, options={}) {
           }
         };
 
-        synopsis = {
+        var synopsis = {
           class: model.constructor.modelName,
           from: model.state,
           to: name,

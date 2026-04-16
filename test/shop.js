@@ -32,14 +32,12 @@ schema.plugin(require(path.join(__dirname, '..')), {
   verbose: false,
   machine: {
     pending: {
-      transitions: {
-        active: {
-          target: 'active',
-          action: function() {
-            return new Promise((resolve) => {
-              resolve(false);
-            })
-          }
+      active: {
+        target: 'active',
+        action: function() {
+          return new Promise((resolve) => {
+            resolve(false);
+          })
         }
       }
     }

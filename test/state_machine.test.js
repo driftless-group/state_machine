@@ -43,9 +43,26 @@ describe('state_machine', () => {
     
     order.save().then(() => {
       assert.equal(order.state, 'pending');
+      order.transition('active').then(() => {
+        order.transition('end').then(() => {
+          assert.equal(order.state, 'complete')
+          done();
+        }).catch(doneMessage(done));
+      });
+
+    }).catch(doneMessage(done));
+  })
+
+
+  it('strict: cant tranisition to an invalid state', function(done) {
+    var order = new Order({})
+    
+    order.save().then(() => {
+      assert.equal(order.state, 'pending');
       order.transition('complete').then(() => {
         done();
       }).catch(function(error) {
+        //console.log('error',error.message);
         assert.equal(error.cause.success, false);
         assert.equal(error.cause.autopsy.event, 'complete');
         assert.equal(error.cause.autopsy.args.length, 0);
@@ -61,7 +78,7 @@ describe('state_machine', () => {
     }).catch(doneMessage(done));
   })
 
-   it('unstrict: can tranisition to whatever state: existing', function(done) {
+  it('unstrict: can tranisition to whatever state: existing', function(done) {
     var shop = new Shop({})
     
     shop.save().then(() => {
