@@ -1,6 +1,6 @@
 {
   "name": "@drifted/state_machine",
-  "version": "0.0.5",
+  "version": "0.0.10",
   "description": "state machine.",
   "homepage": "https://github.com/driftless-group/state_machine#readme",
   "bugs": {
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/driftless-group/state_machine.git"
   },
-  "license": "UNLICENSED",
+  "license": "GPL-3.0",
   "author": "Scott Ballantyne",
   "type": "commonjs",
   "main": "index.js",
