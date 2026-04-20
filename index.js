@@ -185,7 +185,9 @@ module.exports = function stateMachine(schema, options={}) {
                   }).catch(reject);
 
                 }
-              }).catch(reject);
+              }).catch((error) => {
+                resolve(false);
+              });
             }).catch(reject);
           }).catch(reject);
 
