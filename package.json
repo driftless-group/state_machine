@@ -1,6 +1,6 @@
 {
   "name": "@drifted/state_machine",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "state machine.",
   "homepage": "https://github.com/driftless-group/state_machine#readme",
   "bugs": {

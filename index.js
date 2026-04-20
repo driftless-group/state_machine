@@ -158,24 +158,32 @@ module.exports = function stateMachine(schema, options={}) {
         // than 'this'.  
 
           change.before.apply(model).then(() => {
-            change.guard.apply(model).then(() => {
-              model.state = change.target;
-              
-              change.action.apply(model, args).then((result) => {
+            change.action.apply(model, args).then(() => {
+              change.guard.apply(model).then((allow) => {
+                if (allow == undefined) {
+                  allow = true;
+                }
+
+                if (allow) {
+                  model.state = change.target;
+                }
+
                 if (options.verbose) {
                   console.log('transition:saving', model);
                 }
 
-                if (opts.save) {
+                if (opts.save && allow) {
                   model.save().then(() => {
                     change.after.apply(model).then(() => {
-                      resolve(result != undefined ? result : true);
+                      resolve(allow);
                     }).catch(reject);
                   }).catch(reject);
+
                 } else {
                   change.after.apply(model).then(() => {
-                    resolve(result != undefined ? result : true);
+                    resolve(allow);
                   }).catch(reject);
+
                 }
               }).catch(reject);
             }).catch(reject);
