@@ -88,6 +88,12 @@ module.exports = function stateMachinePlugin(schema, options={}) {
 
         var result =  await self.applyStep(transition, ...args)
           .catch(function assembleError(innerError) {
+            if (options.verbose) {
+              console.log(innerError);
+            }
+            // adding a console.log here because the 
+            // error isn't going to the catch function.  Weird.
+            
             innerError.cause.results = results;
             reject(innerError);
           }); 
