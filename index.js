@@ -186,7 +186,12 @@ module.exports = function stateMachine(schema, options={}) {
 
                 }
               }).catch((error) => {
-                resolve(false);
+                if (options.verbose) {
+                  console.log(error);
+                }
+                change.after.apply(model).then(() => {
+                  resolve(false);
+                }).catch(reject);
               });
             }).catch(reject);
           }).catch(reject);
