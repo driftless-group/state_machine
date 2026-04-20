@@ -1,7 +1,7 @@
 function truth() { return true; };
 function nothing() { return new Promise((resolve) => { resolve(); })};
 
-module.exports = function stateMachinePlugin(schema, options={}) {
+module.exports = function stateMachine(schema, options={}) {
 
   if (options.strict == undefined) {
     options.strict = true;
