@@ -45,6 +45,9 @@ schema.plugin(require(path.join(__dirname, '..')), {
     active: {
       end: {
         target: 'complete'
+      },
+      cancel: {
+        target: 'cancelled'
       }
     }
   }

@@ -71,47 +71,38 @@ module.exports = function stateMachinePlugin(schema, options={}) {
 
   schema.methods.change = function(...args) {
     var self = this;
-    var set = args[0];
-    
+    var set = args;
+
     if (options.verbose) {
       console.log('transition:set',set);
     }
 
-    if (Array.isArray(set)) {
-      set = args.shift();
+    return new Promise(async(resolve, reject) => {
+      var results = [];
 
-      return new Promise(async(resolve, reject) => {
-        var results = [];
-
-        while(set.length > 0) {
-          var transition = set.shift();
-          if (options.verbose) {
-            console.log('transition:applyStep', transition, args);
-          }
-
-          var result =  await self.applyStep(transition, ...args)
-            .catch(function assembleError(innerError) {
-              innerError.cause.results = results;
-              reject(innerError);
-            }); 
-
-          if (result != undefined) {
-            results.push(result);
-          }
-        }
-
+      while(set.length > 0) {
+        var transition = set.shift();
         if (options.verbose) {
-          console.log('results',results);
+          console.log('transition:applyStep', transition, args);
         }
-        
-        resolve(results);
-      })
-    } else {
-      if (options.verbose) {
-        console.log('transition:applyStep', args);
+
+        var result =  await self.applyStep(transition, ...args)
+          .catch(function assembleError(innerError) {
+            innerError.cause.results = results;
+            reject(innerError);
+          }); 
+
+        if (result != undefined) {
+          results.push(result);
+        }
       }
-      return this.applyStep(...args);
-    }
+
+      if (options.verbose) {
+        console.log('results',results);
+      }
+
+      resolve(results);
+    })
   }
 
   schema.methods.applyStep = function(...args) {

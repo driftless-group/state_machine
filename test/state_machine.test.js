@@ -2,7 +2,7 @@ const assert   = require('assert');
 const path     = require('path');
 const mongoose = require('mongoose');
 var {
-  doneMessage
+  exception
 } = require('@drifted/qa');
 
 process.env.NODE_ENV = 'test';
@@ -24,7 +24,7 @@ describe('state_machine', () => {
   after((done) => {
     done();
   })
-
+  
   it('strict: create a new order and have it have a state and change', function(done) {
     var order = new Order({})
     
@@ -33,9 +33,23 @@ describe('state_machine', () => {
       order.change('active').then(() => {
         assert.equal(order.state, 'active');
         done();
-      }).catch(doneMessage(done));
+      }).catch(exception(done));
 
-    }).catch(doneMessage(done));
+    }).catch(exception(done));
+  })
+
+
+  it('strict: create a new order and change multiple states', function(done) {
+    var order = new Order({})
+    
+    order.save().then(() => {
+      assert.equal(order.state, 'pending');
+      order.change('active', 'cancel').then(() => {
+        assert.equal(order.state, 'cancelled');
+        done();
+      }).catch(exception(done));
+
+    }).catch(exception(done));
   })
 
   it('strict: cant tranisition to an invalid state', function(done) {
@@ -47,10 +61,10 @@ describe('state_machine', () => {
         order.change('end').then(() => {
           assert.equal(order.state, 'complete')
           done();
-        }).catch(doneMessage(done));
+        }).catch(exception(done));
       });
 
-    }).catch(doneMessage(done));
+    }).catch(exception(done));
   })
 
 
@@ -75,7 +89,7 @@ describe('state_machine', () => {
         done();
       });
 
-    }).catch(doneMessage(done));
+    }).catch(exception(done));
   })
 
   it('unstrict: can tranisition to whatever state: existing', function(done) {
@@ -89,7 +103,7 @@ describe('state_machine', () => {
         done();
       });
 
-    }).catch(doneMessage(done));
+    }).catch(exception(done));
   })
 
 
@@ -104,7 +118,7 @@ describe('state_machine', () => {
         done();
       });
 
-    }).catch(doneMessage(done));
+    }).catch(exception(done));
   })
 
 })

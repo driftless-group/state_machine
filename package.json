@@ -1,6 +1,6 @@
 {
   "name": "@drifted/state_machine",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "state machine.",
   "homepage": "https://github.com/driftless-group/state_machine#readme",
   "bugs": {
@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@drifted/db": "^0.0.1",
-    "@drifted/qa": "^0.0.10",
+    "@drifted/qa": "^0.0.16",
     "mocha": "^11.7.1",
     "mongoose": "^8.18.0"
   }
