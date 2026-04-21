@@ -92,7 +92,7 @@ describe('state_machine', () => {
     }).catch(exception(done));
   })
 
-  it('unstrict: can tranisition to whatever state: existing', function(done) {
+  it('unstrict: can transition to whatever state: existing', function(done) {
     var shop = new Shop({})
     
     shop.save().then(() => {
@@ -107,7 +107,7 @@ describe('state_machine', () => {
   })
 
 
-  it('unstrict: can tranisition to whatever state: not existing', function(done) {
+  it('unstrict: can transition to whatever state: not existing', function(done) {
     var shop = new Shop({})
     
     shop.save().then(() => {
