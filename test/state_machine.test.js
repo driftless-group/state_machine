@@ -68,7 +68,7 @@ describe('state_machine', () => {
   })
 
 
-  it('strict: cant tranisition to an invalid state', function(done) {
+  it('strict: cant transition to an invalid state', function(done) {
     var order = new Order({})
     
     order.save().then(() => {
