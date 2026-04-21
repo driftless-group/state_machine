@@ -11,6 +11,8 @@ require('@drifted/db');
 var { Order } = require(path.join(__dirname, 'order'));
 var { Shop } = require(path.join(__dirname, 'shop'));
 
+console.log('MONGO_URL', process.env.MONGO_URL);
+
 describe('state_machine', () => {
 
   before((done) => {
