@@ -5,13 +5,11 @@ var {
   exception
 } = require('@drifted/qa');
 
-process.env.NODE_ENV = 'test';
-
-require('dotenv').config({path: path.join(__dirname, '.env')});
-var { Order } = require(path.join(__dirname, 'order'));
-var { Shop } = require(path.join(__dirname, 'shop'));
+require('@drifted/env/test')
 require('@drifted/db');
 
+var { Order } = require(path.join(__dirname, 'order'));
+var { Shop } = require(path.join(__dirname, 'shop'));
 
 describe('state_machine', () => {
 
