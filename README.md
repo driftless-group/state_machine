@@ -66,3 +66,5 @@
    })
 
 ```
+
+[![Run Tests](https://github.com/driftless-group/state_machine/actions/workflows/test.yml/badge.svg)](https://github.com/driftless-group/state_machine/actions/workflows/test.yml)
