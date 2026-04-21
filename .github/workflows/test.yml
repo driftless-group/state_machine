@@ -19,6 +19,7 @@ jobs:
         run: npm install
       - name: Run tests
         env:
+          NODE_ENV: ci
           MONGO_URL: ${{ secrets.MONGO_URL }}
         run: npx mocha --exit  
 
